@@ -1,8 +1,8 @@
 Name: 85.254.195.140_index2.php_do_rtf=1&id=74.doc
 Language: en
 Creator: 
-Creation date: 
-Last modification: 
+Creation date: 2020-03-25
+Last modification: 2020-03-25
 MIME type: application/rtf
 
 uuuuuuuuuuuuu

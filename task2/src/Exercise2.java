@@ -16,14 +16,17 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
 
+import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.langdetect.OptimaizeLangDetector;
 import org.apache.tika.language.detect.LanguageResult;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.TikaCoreProperties;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeTypes;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 public class Exercise2 {
@@ -68,35 +71,22 @@ public class Exercise2 {
         InputStream inputStream = new FileInputStream(file);
         AutoDetectParser autoDetectParser = new AutoDetectParser();
         Metadata metadata = new Metadata();
-        BodyContentHandler bodyContentHandler = new BodyContentHandler(-1);
+        BodyContentHandler bodyContentHandler = new BodyContentHandler(250000);
         autoDetectParser.parse(inputStream, bodyContentHandler, metadata);
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-ddhh:mm:ss");
-        Date creationDate = null;
-        Date lastModification = null;
-        String mimeType = null;
+        Tika tika = new Tika();
+        String mimeType = tika.detect(file);
+        String tikaContent = tika.parseToString(file);
 
-        for(String name : metadata.names()) {
-            System.out.println(name + ": " + metadata.get(name));
-            if (name.contentEquals("Creation-Date") || name.contentEquals("meta:creation-date") || name.contentEquals("dcterms:created"))
-                creationDate=dateFormat.parse(metadata.get(name).substring(0, 10)+metadata.get(name).substring(11, 19));
-            if (name.contentEquals("Last-Save-Date") || name.contentEquals("Last-Modified") || name.contentEquals("meta:save-date")) {
-                try {
-                    lastModification=dateFormat.parse(metadata.get(name).substring(0, 10)+metadata.get(name).substring(11, 19));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (name.contentEquals("creator") || name.contentEquals("meta:author") || name.contentEquals("Author"))
-                mimeType=metadata.get(name);
-        }
+        langDetector.reset();
+        langDetector.addText(tikaContent);
+        LanguageResult languageResult = langDetector.detect();
 
-        LanguageResult languageResult = langDetector.detect(bodyContentHandler.toString());
-        MimeTypes mimeTypes = new MimeTypes();
-        InputStream bufferedIn = new BufferedInputStream(inputStream);
-        MediaType mediaType = mimeTypes.detect(bufferedIn, metadata);
+        String creatorName = metadata.get(TikaCoreProperties.CREATOR);
+        DateTime creationDate = new DateTime(metadata.get(TikaCoreProperties.CREATED));
+        DateTime lastModification = new DateTime(metadata.get(TikaCoreProperties.MODIFIED));
 
-        saveResult(file.getName(), languageResult.getLanguage(), mimeType, creationDate, lastModification, mediaType.toString(), bodyContentHandler.toString());
+        saveResult(file.getName(), languageResult.getLanguage(), creatorName, creationDate.toDate(), lastModification.toDate(), mimeType, bodyContentHandler.toString());
     }
 
     private void saveResult(String fileName, String language, String creatorName, Date creationDate,
