@@ -37,14 +37,14 @@ public class OpenNLP {
 
     public void run() throws IOException {
 
-//        languageDetection();
+        languageDetection();
          tokenization();
-//        sentenceDetection();
-//         posTagging();
-//         lemmatization();
-//         stemming();
-//         chunking();
-//        nameFinding();
+        sentenceDetection();
+         posTagging();
+         lemmatization();
+         stemming();
+         chunking();
+        nameFinding();
     }
 
     private void languageDetection() throws IOException {
@@ -235,6 +235,7 @@ public class OpenNLP {
                 + "such as the Lockheed Dialog system, came into use early in the 1970s.";
 
 //        File modelFile = new File(NAME_MODEL);
+//        Arrays.asList(text.split(" ")).forEach(elemnt -> System.out.println(elemnt));
         File modelFile = new File(ENTITY_XYZ_MODEL);
         TokenNameFinderModel tokenNameFinderModel = new TokenNameFinderModel(modelFile);
         NameFinderME nameFinderME = new NameFinderME(tokenNameFinderModel);

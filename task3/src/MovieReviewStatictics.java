@@ -26,8 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class MovieReviewStatictics
-{
+public class MovieReviewStatictics {
     private static final String DOCUMENTS_PATH = "movies/";
     private int _verbCount = 0;
     private int _nounCount = 0;
@@ -46,16 +45,13 @@ public class MovieReviewStatictics
     private TokenNameFinderModel _placesModel;
     private TokenNameFinderModel _organizationsModel;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         MovieReviewStatictics statictics = new MovieReviewStatictics();
         statictics.run();
     }
 
-    private void run()
-    {
-        try
-        {
+    private void run() {
+        try {
             initModelsStemmerLemmatizer();
 
             File dir = new File(DOCUMENTS_PATH);
@@ -64,8 +60,7 @@ public class MovieReviewStatictics
             _statisticsWriter = new PrintStream("statistics.txt", "UTF-8");
 
             Arrays.sort(reviews, Comparator.comparing(File::getName));
-            for (File file : reviews)
-            {
+            for (File file : reviews) {
                 System.out.println("Movie: " + file.getName().replace(".txt", ""));
                 _statisticsWriter.println("Movie: " + file.getName().replace(".txt", ""));
 
@@ -78,20 +73,17 @@ public class MovieReviewStatictics
             overallStatistics();
             _statisticsWriter.close();
 
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MovieReviewStatictics.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void initModelsStemmerLemmatizer()
-    {
-        try
-        {
+    private void initModelsStemmerLemmatizer() {
+        try {
 //         TODO: load all OpenNLP models (+Porter stemmer + lemmatizer)
 //         from files (use class variables)
 
-             _sentenceModel = new SentenceModel(new File("models/en-sent.bin"));
+            _sentenceModel = new SentenceModel(new File("models/en-sent.bin"));
             _tokenizerModel = new TokenizerModel(new File("models/en-token.bin"));
             _posModel = new POSModel(new File("models/en-pos-maxent.bin"));
             _peopleModel = new TokenNameFinderModel(new File("models/en-ner-person.bin"));
@@ -101,14 +93,12 @@ public class MovieReviewStatictics
             _stemmer = new PorterStemmer();
             _lemmatizer = new DictionaryLemmatizer(new File("models/en-lemmatizer.dict"));
 
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MovieReviewStatictics.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void processFile(String text)
-    {
+    private void processFile(String text) {
         // TODO: process the text to find the following statistics:
         // For each movie derive:
         //    - number of sentences
@@ -120,11 +110,11 @@ public class MovieReviewStatictics
         //    - number of (unique) words from a dictionary (lemmatization)
         int noWords = 0;
         //    -  people
-        Span people[] = new Span[] { };
+        Span people[] = new Span[]{};
         //    - locations
-        Span locations[] = new Span[] { };
+        Span locations[] = new Span[]{};
         //    - organisations
-        Span organisations[] = new Span[] { };
+        Span organisations[] = new Span[]{};
 
         // TODO + compute the following overall (for all movies) POS tagging statistics:
         //    - percentage number of adverbs (class variable, private int _verbCount = 0)
@@ -132,6 +122,19 @@ public class MovieReviewStatictics
         //    - percentage number of verbs (class variable, private int _adjectiveCount = 0)
         //    - percentage number of nouns (class variable, private int _adverbCount = 0)
         //    + update _totalTokensCount
+
+        POSTaggerME posTaggerME = new POSTaggerME(_posModel);
+        for (String element : posTaggerME.tag(text.split(" "))) {
+            if (element.contains("NN")) {
+                _nounCount++;
+            } else if (element.contains("VB")) {
+                _verbCount++;
+            } else if (element.contains("JJ")) {
+                _adjectiveCount++;
+            } else if (element.contains("RB")) {
+                _adverbCount++;
+            }
+        }
 
         // ------------------------------------------------------------------
 
@@ -144,23 +147,15 @@ public class MovieReviewStatictics
         // (update noTokens and _totalTokensCount)
         TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
         noTokens = tokenizerME.tokenizePos(text).length;
+        _totalTokensCount += tokenizerME.tokenizePos(text).length;
 
         // TODO perform stemming (use derived tokens)
         // (update noStemmed)
-        Set <String> stems = new HashSet <>();
-        Arrays.asList(text.split(" ")).forEach(element -> stems.add(element.toLowerCase().replaceAll("[^a-z0-9]", "")));
-//        stems.forEach(element -> System.out.println(element));
+        Set<String> stems = new HashSet<>();
 
-//        for (String token : stems)
-//        {
-//            _stemmer.stem(token).toLowerCase().replaceAll("[^a-z0-9]", ""); //thereafter, ignore "" tokens
-//        }
+        stems.addAll(Arrays.asList(text.split(" ")));
 
         stems.forEach(element -> _stemmer.stem(element));
-
-        noStemmed = _stemmer.getResultLength();
-
-//        System.out.println(text);
         noStemmed = _stemmer.stem(text).length();
 
 
@@ -170,38 +165,20 @@ public class MovieReviewStatictics
         tags = new String[]{"NNP", "WRB", "VBP", "PRP", "VB", "TO", "VB", "PRP", "VB", "JJ", "JJ", "NNS", "IN", "JJ",
                 "NN", "VBG"};
 
-//        noWords = _lemmatizer.lemmatize(text.split(" "), tags).toString().replace("O", "").split(" ").length;
-//        Arrays.asList(text.split(" ")).forEach(element -> System.out.println(element));
-//        String newText = text.replace("O", "");
-//        Arrays.asList(_lemmatizer.lemmatize(_stemmer.stem(text).split(" "), tags)).forEach(element -> System.out.println(element));
-//        System.out.println("\n\n\n1");
         noWords = _lemmatizer.lemmatize(text.split("O"), tags).length;
 
 
         // TODO derive people, locations, organisations (use tokens),
         // (update people, locations, organisations lists).
 
-//        TokenizerModel nameFinderME = new TokenizerModel(_peopleModel);
-//        NameFinderME nameFinderME = new NameFinderME(_peopleModel);
+
         NameFinderME nameFinderME = new NameFinderME(_peopleModel);
+        NameFinderME organizationsFinderME = new NameFinderME(_organizationsModel);
+        NameFinderME placesFinderME = new NameFinderME(_placesModel);
+
         people = nameFinderME.find(text.split(" "));
-
-//        Arrays.asList(nameFinderME.find(text.split(" "))).forEach(element -> System.out.println(element));
-
-
-
-//        Tokenizer tokenizer= SimpleTokenizer.INSTANCE;
-//        String[] tokens= tokenizer.tokenize(text);
-//        people = nameFinderME.find(tokens);
-//        people = nameFinderME.find(text.split(" "));
-
-//        Arrays.asList(people).forEach(element -> System.out.println(element));
-
-//        TokenNameFinder nameFinderME1 = new Find(_placesModel);
-//        locations = nameFinderME1.find(text.split(" "));
-//
-//        TokenNameFinder nameFinderME2 = new NameFinderME(_organizationsModel);
-//        organisations = nameFinderME2.find(text.split(" "));
+        organisations = organizationsFinderME.find(text.split(" "));
+        locations = placesFinderME.find(text.split(" "));
 
         // TODO update overall statistics - use tags and check first letters
         // (see https://www.clips.uantwerpen.be/pages/mbsp-tags; first letter = "V" = verb?)
@@ -213,27 +190,24 @@ public class MovieReviewStatictics
         saveResults("Stemmed forms (unique)", noStemmed);
         saveResults("Words from a dictionary (unique)", noWords);
 
-        saveNamedEntities("People", people, new String[] { });
-        saveNamedEntities("Locations", locations, new String[] { });
-        saveNamedEntities("Organizations", organisations, new String[] { });
+        saveNamedEntities("People", people, text.split(" "));
+        saveNamedEntities("Locations", locations, text.split(" "));
+        saveNamedEntities("Organizations", organisations, text.split(" "));
     }
 
 
-    private void saveResults(String feature, int count)
-    {
+    private void saveResults(String feature, int count) {
         String s = feature + ": " + count;
         System.out.println("   " + s);
         _statisticsWriter.println(s);
     }
 
-    private void saveNamedEntities(String entityType, Span spans[], String tokens[])
-    {
+    private void saveNamedEntities(String entityType, Span spans[], String tokens[]) {
         StringBuilder s = new StringBuilder(entityType + ": ");
-        for (int sp = 0; sp < spans.length; sp++)
-        {
+        for (int sp = 0; sp < spans.length; sp++) {
             int loopCounter = 0;
-            for (int i = spans[sp].getStart(); i < spans[sp].getEnd(); i++)
-            {
+//            System.out.println(spans[sp].getStart());
+            for (int i = spans[sp].getStart(); i < spans[sp].getEnd(); i++) {
                 s.append(tokens[i]);
                 if (i < spans[sp].getEnd() - 1) s.append(" ");
             }
@@ -244,8 +218,7 @@ public class MovieReviewStatictics
         _statisticsWriter.println(s);
     }
 
-    private void overallStatistics()
-    {
+    private void overallStatistics() {
         _statisticsWriter.println("---------OVERALL STATISTICS----------");
         DecimalFormat f = new DecimalFormat("#0.00");
 
