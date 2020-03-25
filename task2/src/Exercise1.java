@@ -29,9 +29,9 @@ public class Exercise1 {
     }
 
     private void run() throws ParserConfigurationException, SAXException, IOException, TikaException {
-//        LinkedList<String> phonesByTwoParses = exercise1a();
-//        System.out.println("Results of the two parses:");
-//        printResults(phonesByTwoParses);
+        LinkedList<String> phonesByTwoParses = exercise1a();
+        System.out.println("Results of the two parses:");
+        printResults(phonesByTwoParses);
 
         LinkedList<String> phonesByTika = exercise1b();
         System.out.println("Results of Tika:");

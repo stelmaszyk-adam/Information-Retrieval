@@ -1,0 +1,242 @@
+Name: Polymer Extrusion und Compounding.pptx
+Language: de
+Creator: Ania
+Creation date: 
+Last modification: 2018-01-23
+MIME type: application/vnd.openxmlformats-officedocument.presentationml.presentation
+
+Polymer Extrusion und Compounding
+aktuelle Forschungsarbeiten
+Festkolloquium GRL 75, 26.11.2015 Montanuniversität Leoben
+Univ.-Prof. Dipl.-Ing. Dr.mont. Jürgen MIETHLINGER, MBA
+Hanny Albrecht, M.Sc.; DI(FH) Sylvia Apostol; Mag. Bernhard Löw-Baselli; DI Izaro Garmendia; DI Hans Jürgen Luger; DI Christian Marschik; DI Sophie Pachner
+	
+
+
+Produktion der Zukunft
+
+
+
+
+
+2D Druck-Durchsatz-Modell Meteringzone EINSCHNECKENXTRUDER
+
+
+
+
+
+CFD-Simulation mit parametrisierter Geometrieerstellung DOPPELSCHNECKE
+
+1) Pre-Processing
+Schneckengeometrie
+analytische Gleichungen in Mathematica ®
+nach Triangulation exportiert - Dateiformat konvertiert
+in Ansys Polyflow® importiert
+Zylinders mittels CAD - direkt importiert
+2) Simulation
+3) Post-Proprocessing
+Rd. 90% Arbeitszeitverkürzung
+
+
+
+
+
+
+
+
+
+Modellierung von Barriereschnecken
+
+
+
+Patent erteilt
+Nichtisotherme Druck-Durchsatzrechnung, numerisch gekoppelt mit Aufschmelzrechnung 
+45 mm Extruder: max. 450 kg/h PE, PP
+35 mm Extruder: max. 275 kg/h PE, PP
+
+
+Entgasungsprozess in Ein- und Doppelschneckenextruder
+
+
+
+
+
+Prozessdehnrheologie
+
+
+Patent in Anmeldung
+
+
+
+
+
+Thermoplastpultrusion
+
+
+
+
+
+
+
+
+Inline-Messung des Strömungsprofils
+
+
+
+Ultraschall
+OCT
+
+
+
+
+
+Danksagung
+
+Industriepartner: BATTENFELD-CINCINNATI, EREMA, KRAUSS-MAFFEI, LEISTRITZ, POLOPLAST, SML, STARLINGER, TEUFELBERGER, TIGER
+
+Meinen Mitarbeitern/Co-Autoren: Hanny Albrecht, M.Sc.; DI(FH) Sylvia Apostol; Mag. Bernhard Löw-Baselli; DI Izaro Garmendia; DI Hans Jürgen Luger; DI Christian Marschik; DI Sophie Pachner
+
+Fördergeber: FFG (Österreichische Forschungsförderungsgesellschaft), dem Linz Center of Mechatronics (LCM) und dem Kompetenzzentrum Holz.
+Herzliche Glückwünsche zum 75. Geburtstag & Danksagung
+em.Univ.-Prof. Günter Rüdiger Langecker & den Leobener Kollegen!
+
+
+ 
+
+
+ 
+
+
+depm m mm depth m mm
+
+depth in mm
+
+0.5
+
+0
+0
+
+U=1rpm
+
+50
+v in mm/s
+U = 9 rpm
+
+ 
+
+l
+
+v m mm/s
+
+depth m mm depth In mm
+
+depth in mm
+
+   
+
+ 
+
+U = 3 rpm
+1 E E
+E E
+E E
+z .:
+0.5 a ‘5.
+(D (D
+n u
+0
+0 50 O 50 O 50
+v m mm/s v in mm/s v In mm/s
+U=11rpm U=13rpm U=15rpm
+‘I
+1 E 1 E
+‘ E ‘ E
+E E
+1: z
+0.5 '5 0.5 E
+CD 0)
+U "O
+O 0
+0 50 0 50
+v m mm/s v In mm/s v In mm/s
+U = 19 rpm
+1
+0.5
+O
+0 50
+v in mm/s
+
+
+Transducer
+
+FlieBkanal
+
+ 
+
+Partikel
+
+ 
+
+
+Transducer
+
+FlieBkanal
+
+ 
+
+Streuung
+
+
+mm m... wmduw
+
+ 
+
+Dvube Mud ‘
+am
+
+ 
+
+ 
+
+ 
+
+Sm me
+
+  
+
+PW DOCY
+WW ””1 M
+Fad I“
+W.“ \ﬂ 0‘
+nm axvs \ Onlia‘ ms
+9),. u," a: bum
+m.
+m,
+
+4
+
+pm" m vam-v m
+
+
+4
+16
+19
+22
+24
+mm/s
+
+ 
+
+ 
+
+ 
+
+
+mun: Ex‘rluslou uun
+coumuunlun
+amuwu‘wmm.
+
+ 
+
+
+
