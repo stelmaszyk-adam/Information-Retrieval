@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lucene-backward-codecs-7.2.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/jars/lucene-backward-codecs-7.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jars/lucene-core-7.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jars/lucene-queries-7.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jars/tika-app-1.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jars/lucene-queryparser-7.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
